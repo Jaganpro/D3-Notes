@@ -1,6 +1,6 @@
 # D3-Tutorial-Notes
 
-## 1 Selection of DOM Elements:
+### A Selection of DOM Elements:
 
 Using D3, we can select DOM elements. There are 2 methods to do this
   A. d3.select() --> Returns only the first element matching the criteria
@@ -9,7 +9,7 @@ Using D3, we can select DOM elements. There are 2 methods to do this
 NOTE: They accept CSS Selectors or name of the Parameter and return the selection of the element.
 
 Examples:
-d3.select('h1');
+'d3.select('h1');'
 
-## 2 Manipulation of DOM Elements:
+### B Manipulation of DOM Elements:
 

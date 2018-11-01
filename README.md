@@ -36,7 +36,32 @@ If we want to update the text of the DOM Element, we can use the "text" property
 
 ```
 d3.select('h1').text('Updated Text');
+```
 
+We can append text in the DOM elements
+
+```
+d3.select('body').append('p').text('This is Appended Text');
+```
+
+### 3. Data Loading and Binding of Data in D3
+
+In D3 we can display our DOM Elements using our Dataset. We can map Data into our DOM Elements.
+
+In this example, we are using the dataset to loop through each datapoint and create a DOM element.
+
+
+```
+var dataset = [1, 2, 3, 4, 5];
+
+d3.select('#D3OrgChartDiv') //Here we are selecting the Body of the DOM element
+          .selectAll('p') // ??? This is needed, otherwise, it skips the first datapoint from the dataset. Don't know why.
+          .data(dataset) //Choosing the dataset to loop though
+          .enter() //Process one element at a time.
+          .append('p') //Appends a Paragraph for each data element
+          .text(function(d){ return d;});
+```
+ 
 
 
 

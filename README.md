@@ -57,14 +57,46 @@ var dataset = [1, 2, 3, 4, 5];
 d3.select('#D3OrgChartDiv') //Here we are selecting the Body of the DOM element
           .selectAll('p') // ??? This is needed, otherwise, it skips the first datapoint from the dataset. Don't know why.
           .data(dataset) //Choosing the dataset to loop though . This will put the dataset in waiting state for further processing
-          .enter() //Process one element at a time.
-          .append('p') //Appends a Paragraph for each data element
+          .enter() //Process one data item at a time.
+          .append('p') //Appends a Paragraph for each data item
           .text(function(d){ return d;});
 ```
  
+### D) Creating a Simple Bar Chart using D3.JS
 
+We have variables which defines the height and width of the container
 
+```
+var dataset = [80, 100, 56, 120, 180, 30, 40, 120, 160];
 
+var svgWidth = 500;
+var svgHeight = 300;
+var barPadding = 5;
+var barWidth = (svgWidth / dataset.length);
+
+var svg = d3.select('svg')
+            .attr("width", svgWidth)
+            .attr("height", svgHeight)
+            
+var barChart = svg.selectAll("rect")
+                  .data(dataset)
+                  .enter()
+                  .append("rect")
+                  .attr("y", function(d) {
+                      return svgHeight - d
+                  })
+                  .attr("height", function(d) {
+                      return d;
+                  })
+                  .attr("width", barWidth - barPadding)
+                  .attr("transform", function(d, i) { 
+                      var translate = [barWidth * i, 0];
+                      return "translate(" + translate +")";
+                  });
+
+// We dont want all the bars in the bar chart to start from the same position. Hence we use the "Transform" [or] translate to describe where consecutive bars should start/
+
+```
 
 
 

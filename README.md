@@ -44,7 +44,7 @@ We can append text in the DOM elements
 d3.select('body').append('p').text('This is Appended Text');
 ```
 
-### 3. Data Loading and Binding of Data in D3
+### C) Data Loading and Binding of Data in D3
 
 In D3 we can display our DOM Elements using our Dataset. We can map Data into our DOM Elements.
 
@@ -56,7 +56,7 @@ var dataset = [1, 2, 3, 4, 5];
 
 d3.select('#D3OrgChartDiv') //Here we are selecting the Body of the DOM element
           .selectAll('p') // ??? This is needed, otherwise, it skips the first datapoint from the dataset. Don't know why.
-          .data(dataset) //Choosing the dataset to loop though
+          .data(dataset) //Choosing the dataset to loop though . This will put the dataset in waiting state for further processing
           .enter() //Process one element at a time.
           .append('p') //Appends a Paragraph for each data element
           .text(function(d){ return d;});

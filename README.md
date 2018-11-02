@@ -96,14 +96,95 @@ var barChart = svg.selectAll("rect")
 
 // We dont want all the bars in the bar chart to start from the same position. Hence we use the "Transform" [or] translate to describe where consecutive bars should start/
 
+// Here im Translate array, we describe the translate for X Axis (barWidth * i) and Y Axis (0).
+// Here i is the Index.
+
+```
+
+### E) Creating Labels
+
+Here we are trying to add Labels to each of the Bar Chart
+
+```
+var text = svg.selectAll("text")
+              .data(dataset)
+              .enter()
+              .append("text")
+              .text(function(d){
+                  return d;
+              })
+              .attr("y", function(d, i){
+                  return svgHeight - d - 2;
+              })
+              .attr("x", function(d, i){
+                  return barWidth * i;
+              })
+              .attr("fill", "#A64C38");
+```
+
+### F) Scales in D3
+
+Scales are functions which will transform our data, either by increasing or decreasing value for better visualizations.
+
+Lets say our dataset = [1, 2, 3, 4, 5]
+When we generate the barChart, it won't look good as the bars are barely visible
+
+For this we are going to create a variable called "yScale" and we are going to call the function "d3.scaleLinear()"
+
+```
+var yScale = d3.scaleLinear()
+               .domain([0, d3.max(dataset)])
+               .range([0, svgHeight]);
+
+```
+### G) Axes in D3
+Axes are made of Lines, Text and hence they are very complex.
+Thankfully D3 provides us with various functions to create these
+
+```
+1. d3.axisTop()
+2. d3.axisRight()
+3. d3.axisBottom()
+4. d3.axisLeft()
 ```
 
 
+### H) Creating SVG Elements in D3
 
+SVG - Scalable Vector Graphics
 
+Let's say if we want to draw a line, then we can use the (X1,Y1) and (X2,Y2) Coordinates
 
+```
+var line = svg.append("line")
+              .attr("x1", 100)
+              .attr("y1", 50)
+              .attr("x2", 500)
+              .attr("y2", 50)
+              .attr("stroke", "red")
+              .attr("stroke-width", 5)
+              
+```
+For Rectangle, we have to provide X and Y Co-ordinates, Height and Width.
 
+```
+var Rect = svg.append("rect")
+              .attr("x", 100)
+              .attr("y", 100)
+              .attr("width", 200)
+              .attr("height", 100)
+              .attr("fill", "#9B95FF");
+```
+For Circle, we need to provide the co-ordinates of the center of the circle and its radius
+  
+```
+var circle = svg.append("circle")
+                .attr("cx", 200)
+                .attr("cy", 300)
+                .attr("r", 80)
+                .attr("fill", "#7CE8D5");
 
+```
 
 
 

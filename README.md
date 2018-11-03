@@ -13,6 +13,8 @@ NOTE: They accept CSS Selectors or name of the Parameter and return the selectio
 Examples:
 ```
 d3.select('h1');
+d3.select('p');
+d3.select('.cssClassName');
 ```
 
 ### B) Manipulation of DOM Elements:
@@ -44,7 +46,21 @@ We can append text in the DOM elements
 d3.select('body').append('p').text('This is Appended Text');
 ```
 
-### C) Data Loading and Binding of Data in D3
+### C) Handling DOM Events in D3
+
+We can use DOM Events in D3
+
+```
+d3.selectAll('.hover-me')
+  .on('mouseover', function(){
+      this.style.backgroundColor = 'Red'
+  })
+  .on('mouseleave', function(){
+      this.style.backgroundColor = '';
+  })
+```
+
+### D) Data Loading and Binding of Data in D3
 
 In D3 we can display our DOM Elements using our Dataset. We can map Data into our DOM Elements.
 
@@ -62,7 +78,7 @@ d3.select('#D3OrgChartDiv') //Here we are selecting the Body of the DOM element
           .text(function(d){ return d;});
 ```
  
-### D) Creating a Simple Bar Chart using D3.JS
+### E) Creating a Simple Bar Chart using D3.JS
 
 We have variables which defines the height and width of the container
 
@@ -101,7 +117,7 @@ var barChart = svg.selectAll("rect")
 
 ```
 
-### E) Creating Labels
+### F) Creating Labels
 
 Here we are trying to add Labels to each of the Bar Chart
 
@@ -122,7 +138,7 @@ var text = svg.selectAll("text")
               .attr("fill", "#A64C38");
 ```
 
-### F) Scales in D3
+### G) Scales in D3
 
 Scales are functions which will transform our data, either by increasing or decreasing value for better visualizations.
 
@@ -137,7 +153,7 @@ var yScale = d3.scaleLinear()
                .range([0, svgHeight]);
 
 ```
-### G) Axes in D3
+### H) Axes in D3
 Axes are made of Lines, Text and hence they are very complex.
 Thankfully D3 provides us with various functions to create these
 
@@ -149,7 +165,7 @@ Thankfully D3 provides us with various functions to create these
 ```
 
 
-### H) Creating SVG Elements in D3
+### I) Creating SVG Elements in D3
 
 SVG - Scalable Vector Graphics
 

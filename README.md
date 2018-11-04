@@ -1,49 +1,72 @@
 # D3-Tutorial-Notes
 
-### A) Selection of DOM Elements:
+D3 -- Data Driven Documents
+      Used to easily Visualize and Interact with Data
+      
+In D3, there is lot of creativity. There is lot of ways we can analyze and express data.
+      
+### Prominent Examples of D3:
+
+2013 Obama Budget Proposal : https://archive.nytimes.com/www.nytimes.com/interactive/2012/02/13/us/politics/2013-budget-proposal-graphic.html?hp
+
+Who will win the Presidency? : https://projects.fivethirtyeight.com/2016-election-forecast/
+
+Is it Better to Rent or Buy? : https://www.nytimes.com/interactive/2014/upshot/buy-rent-calculator.html
+
+### A) Selection of DOM Elements: (DOM Traversal)
 
 Using D3, we can select DOM elements. There are 2 methods to do this
 ```
   A. d3.select() --> Returns only the first element matching the criteria
   B. d3.selectAll() --> Returns all the elements matching the criteria
 ```
-  
-NOTE: They accept CSS Selectors or name of the Parameter and return the selection of the element.
 
 Examples:
 ```
-d3.select('h1');
-d3.select('p');
-d3.select('.cssClassName');
+d3.select('h1'); --> Using HTML Elements
+d3.select('.cssClassName'); --> Using CSS Class Name
+d3.select('#myDiv'); --> Selection Using ID
 ```
 
 ### B) Manipulation of DOM Elements:
 
-With D3 we can manipulate DOM Elements as well. 
-This means we can update their Style, Values and Bind Data with them.
+With D3 we can manipulate DOM Elements using various functions. 
 
-Example: Updating the color of the DOM Element
+There are 3 main functions to do this
+    A. d3.select('p').attr
+    B. d3.select('p').style
+    C. d3.select('p').append
+    d. d3.select('p').text
+    
+1. Using "attr" We will be able to change the attributes of the HTML Element
+```
+d3.select('p').attr('class', 'heading');
+```
+
+2. Using "style", we would be able to change the css of the HTML Element.
+
 ```
 d3.select('h1').style('color','red');
 ```
 
-We can chain multiple styles using the "Attr" method
+3. Using "append", we would be able to add the elements inside of the HTML Tags
 
 ```
-d3.select('h1').style('color', 'red')
-               .attr('class', 'heading');
+d3.select('body').append('p').text('This is Appended Text');
+
 ```
 
-If we want to update the text of the DOM Element, we can use the "text" property
+4. If we want to update the text of the DOM Element, we can use the "text" property
 
 ```
 d3.select('h1').text('Updated Text');
 ```
 
-We can append text in the DOM elements
+We can chain multiple functions using the dot notation.
 
 ```
-d3.select('body').append('p').text('This is Appended Text');
+d3.select('h1').style('color', 'red')
+               .attr('class', 'heading');
 ```
 
 ### C) Handling DOM Events in D3

@@ -38,25 +38,24 @@ There are 3 main functions to do this
     C. d3.select('p').append
     d. d3.select('p').text
     
-1. Using "attr" We will be able to change the attributes of the HTML Element
+Using "attr" We will be able to change the attributes of the HTML Element
 ```
 d3.select('p').attr('class', 'heading');
 ```
 
-2. Using "style", we would be able to change the css of the HTML Element.
+Using "style", we would be able to change the css of the HTML Element.
 
 ```
 d3.select('h1').style('color','red');
 ```
 
-3. Using "append", we would be able to add the elements inside of the HTML Tags
+Using "append", we would be able to add the elements inside of the HTML Tags
 
 ```
 d3.select('body').append('p').text('This is Appended Text');
-
 ```
 
-4. If we want to update the text of the DOM Element, we can use the "text" property
+If we want to update the text of the DOM Element, we can use the "text" property
 
 ```
 d3.select('h1').text('Updated Text');

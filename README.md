@@ -1,4 +1,4 @@
-# D3-Tutorial-Notes
+# D3-Notes
 
 D3 -- Data Driven Documents
       Used to easily Visualize and Interact with Data

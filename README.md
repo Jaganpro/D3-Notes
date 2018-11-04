@@ -114,6 +114,49 @@ B. Result
 C. Converted_x
 D. Converted_y
 
+### 4) Beyond DOM: SVG
+
+Question is how are we going to visualize the CSV file in D3.
+
+SVG : Scalable Vector Graphics (It is a type of Image Format)
+We can draw lines, shapes and text on SVGs
+
+
+Example of SVG
+```
+<svg width="600" height="200">
+      <circle cx="100" cy="100" r="5"></circle>
+      <circle cx="200" cy="100" r="15"></circle>
+      <circle cx="300" cy="100" r="25" fill="blue"></circle>
+</svg>
+```
+
+OUTPUT:
+![image](https://user-images.githubusercontent.com/2145211/47966326-28ec8f80-e01f-11e8-8b9f-417dd6d81601.png)
+
+
+SVG follows the same DOM tree.
+So, we would be able to interact with SVG, the same way we are able to interact with HTML.
+
+NOTE:
+If we want to use more complex operations, then we are going to deal with "Relative Position" and "Absolute Position".
+So, lets say for example, when we want to move multiple SVG elements, it would be really tedious and difficult to move every single element individually.
+
+So, we can use Groups. It can be represented as "g" in coding
+
+```
+<g transform="translate(100, 50)">...</g>
+<g transform="translate(100, 0) rotate(20)">...</g>
+```
+
+Here we can specify "g" tag and group all the elements together.
+"g" tag has an attribute called "transform" and it is used to transform all the elements inside the "g" tag.
+
+> Transformation happen from RIGHT TO LEFT
+> Rotation is applied before translation.
+
+
+Let's start working with Canvas Example
 
 ```
 HTML FILE: (Shots.html)
@@ -142,11 +185,11 @@ d3.csv("static/shots.csv", function(data){
       console.log(data);
       
       var shots = d3.select("svg")
-                    .selectAll("g")
+                    .selectAll("g") //Here we are selecting all the Groups.
                     .data(data)
                     .enter()
-                    .append("g")
-                        .attr("class", "shot")
+                    .append("g") // One group per row in our Dataset
+                        .attr("class", "shot")  // Always use the CSS Classes. It is a best Practice
                         .attr("transform", function(d){
                               return "translate(" + 10 * d.converted_y + "," + 10 * d.converted_x + ")";
                         })
@@ -162,30 +205,6 @@ d3.csv("static/shots.csv", function(data){
 
 }
 ```
-
-### 4) Beyond DOM: SVG
-
-Question is how are we going to visualize the CSV file in D3.
-
-SVG : Scalable Vector Graphics (It is a type of Image Format)
-We can draw lines, shapes and text on SVGs
-
-
-Example of SVG
-```
-<svg width="600" height="200">
-      <circle cx="100" cy="100" r="5"></circle>
-      <circle cx="200" cy="100" r="15"></circle>
-      <circle cx="300" cy="100" r="25" fill="blue"></circle>
-</svg>
-```
-
-OUTPUT:
-![image](https://user-images.githubusercontent.com/2145211/47966326-28ec8f80-e01f-11e8-8b9f-417dd6d81601.png)
-
-
-SVG follows the same DOM tree.
-So, we would be able to interact with SVG, the same way we are able to interact with HTML
 
 
 

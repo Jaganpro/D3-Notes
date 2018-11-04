@@ -161,7 +161,7 @@ d3.csv("static/shots.csv", function(data){
                     })
 
 }
-
+```
 
 ### 4) Beyond DOM: SVG
 
@@ -181,7 +181,7 @@ Example of SVG
 ```
 
 OUTPUT:
-![image](https://user-images.githubusercontent.com/2145211/47960060-4c391f80-dfca-11e8-957f-3fe6928439bb.png)
+![image](https://user-images.githubusercontent.com/2145211/47966326-28ec8f80-e01f-11e8-8b9f-417dd6d81601.png)
 
 
 SVG follows the same DOM tree.

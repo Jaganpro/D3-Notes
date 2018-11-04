@@ -40,10 +40,10 @@ d3.select('#myDiv'); --> Selection Using ID
 With D3 we can manipulate DOM Elements using various functions. 
 
 There are 3 main functions to do this
-    A. d3.select('p').attr
-    B. d3.select('p').style
-    C. d3.select('p').append
-    d. d3.select('p').text
+A. d3.select('p').attr
+B. d3.select('p').style
+C. d3.select('p').append
+D. d3.select('p').text
     
 Using "attr" We will be able to change the attributes of the HTML Element
 ```

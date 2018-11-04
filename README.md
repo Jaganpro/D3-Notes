@@ -206,24 +206,108 @@ We are using the translate function to map each and every data point.
 "shots" variable represents all the "g" group datapoints and we are drawing a circle for each datapoint of radius 5px.
 
 
-![image](https://user-images.githubusercontent.com/2145211/47966326-28ec8f80-e01f-11e8-8b9f-417dd6d81601.png)
+![image](https://user-images.githubusercontent.com/2145211/47959837-4cceb780-dfc4-11e8-9888-0635bc4e8af6.png)
 
 And for this dataset, we are going to have a result as shown below:
 
 ![image](https://user-images.githubusercontent.com/2145211/47966969-0742d680-e026-11e8-9f6c-bc51e43373e0.png)
 
+Now, lets make the circle green if the shots are successful, otherwise red.
+
+
+```
+      shots.append("circle")
+           .attr("r", 5)
+                 .attr("fill", function(d){  //We have an attribute "Fill" for circles.
+                      if(d.result == "made"){
+                        return "green";
+                      } else {
+                        return "red";
+                      }
+                 })
+
+```
+Now, we get something like this:
+
+![image](https://user-images.githubusercontent.com/2145211/47967069-aae0b680-e027-11e8-9310-b23003d13857.png)
+
+
+Now, can we make this visualization Interactive ? 
+
+### 5) Interacting with DOM using D3
+
+Now that we have a beautiful rendering of the datapoints from the excel spreadsheet, we can try to make this interactive.
+
+
+```
+      .on("some event", function(d){...})
+```
+
+The events can be a "click" or "move" or "keydown" or "mouseover" or "mouseout" etc. 
+The second argument is the function which is called when the event is triggered.
 
 ```
 .on("mouseover", function(d){
-                        d3.select(this).raise()
+                        d3.select(this)
                           .append("text")
-                          .attr("class", "playername")
+                          .attr("class", "playername") //Good Practice to add a CSS Class in D3
                           .text(d.player);
                     })
-                    .on("mouseout", function(d){
-                        d3.selectAll("text.playername").remove();
-                    })
+                    
 ```
+
+
+d3.select(this) --> This represents the current DOM node 
+Here we are appending a text to each datapoint. This is what happens when we don't destroy the text we created.
+
+![image](https://user-images.githubusercontent.com/2145211/47967426-445d9780-e02b-11e8-81dc-da725afecfe0.png)
+
+```
+.on("mouseout", function(d){
+      d3.selectAll("text.playername").remove(); 
+})
+```
+
+This is one of the reasons why we use the CSS classes. (Ie, it is easy to remove whats being appended to the event).
+This means that we dont need to go throught the loop to remove the text.
+
+Now, as we can see from the example, we have now able to remove the text using the "mouseout" and we are using the CSS class to remove the DOM element
+
+![image](https://user-images.githubusercontent.com/2145211/47967465-bc2bc200-e02b-11e8-9fa3-80e38e07cdcd.png)
+
+Now, when we take a look at this example, we are seeing that the "Text" is added behind the datapoints. 
+We don't want this to happen. So we can use "raise()" to fix this.
+
+This is happening because, the "g" or group is already being placed before the others. 
+
+![image](https://user-images.githubusercontent.com/2145211/47967554-715e7a00-e02c-11e8-9dc4-a27a023bc224.png)
+
+```
+      d3.select(this).raise()
+```
+
+Now, we can see that the names comes above all the circles.
+
+![image](https://user-images.githubusercontent.com/2145211/47967576-bb476000-e02c-11e8-8684-1b3b4e2772dd.png)
+
+
+### 6) Restructing Data using D3
+
+Often we don't have the proper data to be visualized. Hence the data (most of the time) needs restructuring.
+So, D3 provides additional functions to help us with this.
+
+```
+d3.nest()
+d3.stratify()
+d3.hierarchy()
+```
+
+> d3.stratify()
+
+The canonical example for hierarchical data is a family tree.
+
+![image](https://user-images.githubusercontent.com/2145211/47967674-fa29e580-e02d-11e8-8b04-d1798da663ae.png)
+
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

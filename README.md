@@ -84,10 +84,21 @@ d3.select("body")   //Selecting First Body Tag in DOM
   .data([1,2,3,4,5,6,7,8,9,10]) //Array of data
   .enter() //Every element in the array is bound to one node in our selection
   .append("p") //Appending 1 Paragraph for every element of the Array
-      .text(function(d){
+      .text(function(d){ //Here 'd' is the data element in the Array
             return d;
       })
 ```
+
+NOTE: We can also load data from CSV or JSON Files.
+
+```
+d3.csv("filename.csv", function(data) {..})
+d3.json("filename.json", function(data) {..})
+```
+
+Sample CSV dataset
+
+![image](https://user-images.githubusercontent.com/2145211/47959837-4cceb780-dfc4-11e8-9888-0635bc4e8af6.png)
 
 ### C) Handling DOM Events in D3
 

@@ -7,11 +7,18 @@ In D3, there is lot of creativity. There is lot of ways we can analyze and expre
       
 ### Prominent Examples of D3:
 
-2013 Obama Budget Proposal : https://archive.nytimes.com/www.nytimes.com/interactive/2012/02/13/us/politics/2013-budget-proposal-graphic.html?hp
+1. 2013 Obama Budget Proposal : 
+https://archive.nytimes.com/www.nytimes.com/interactive/2012/02/13/us/politics/2013-budget-proposal-graphic.html?hp
 
-Who will win the Presidency? : https://projects.fivethirtyeight.com/2016-election-forecast/
+2. Who will win the Presidency? : 
+https://projects.fivethirtyeight.com/2016-election-forecast/
 
-Is it Better to Rent or Buy? : https://www.nytimes.com/interactive/2014/upshot/buy-rent-calculator.html
+3. Is it Better to Rent or Buy? : 
+https://www.nytimes.com/interactive/2014/upshot/buy-rent-calculator.html
+
+4. Websites using D3
+https://christopheviau.com/d3list/gallery.html
+
 
 ### A) Selection of DOM Elements: (DOM Traversal)
 
@@ -99,6 +106,90 @@ d3.json("filename.json", function(data) {..})
 Sample CSV dataset
 
 ![image](https://user-images.githubusercontent.com/2145211/47959837-4cceb780-dfc4-11e8-9888-0635bc4e8af6.png)
+
+
+Lets assume that we are only going to work with the following columns and try to visualize.
+A. Player
+B. Result
+C. Converted_x
+D. Converted_y
+
+
+```
+HTML FILE: (Shots.html)
+
+<!DOCTYPE html>
+
+<html>      
+      <head>
+            <script src="https://ajax.googlepix.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+            <script src="https://d3js.org/d3.v4.min.js"></script>
+      </head>
+      <body>
+            <select id="selector"></select>
+            <svg id="canvas" height="600px" height="1200px"></svg>
+            <script src="static/shots.js"></script>
+      </body>
+
+</html>
+```
+
+```
+JS FILE: (Shots.js)
+
+d3.csv("static/shots.csv", function(data){
+      
+      console.log(data);
+      
+      var shots = d3.select("svg")
+                    .selectAll("g")
+                    .data(data)
+                    .enter()
+                    .append("g")
+                        .attr("class", "shot")
+                        .attr("transform", function(d){
+                              return "translate(" + 10 * d.converted_y + "," + 10 * d.converted_x + ")";
+                        })
+                    .on("mouseover", function(d){
+                        d3.select(this).raise()
+                          .append("text")
+                          .attr("class", "playername")
+                          .text(d.player);
+                    })
+                    .on("mouseout", function(d){
+                        d3.selectAll("text.playername").remove();
+                    })
+
+}
+
+
+### 4) Beyond DOM: SVG
+
+Question is how are we going to visualize the CSV file in D3.
+
+SVG : Scalable Vector Graphics (It is a type of Image Format)
+We can draw lines, shapes and text on SVGs
+
+
+Example of SVG
+```
+<svg width="600" height="200">
+      <circle cx="100" cy="100" r="5"></circle>
+      <circle cx="200" cy="100" r="15"></circle>
+      <circle cx="300" cy="100" r="25" fill="blue"></circle>
+</svg>
+```
+
+OUTPUT:
+![image](https://user-images.githubusercontent.com/2145211/47960060-4c391f80-dfca-11e8-957f-3fe6928439bb.png)
+
+
+SVG follows the same DOM tree.
+So, we would be able to interact with SVG, the same way we are able to interact with HTML
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ### C) Handling DOM Events in D3
 

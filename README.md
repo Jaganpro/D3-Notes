@@ -68,6 +68,27 @@ d3.select('h1').style('color', 'red')
                .attr('class', 'heading');
 ```
 
+### C) Associating Nodes and Data in D3
+
+Here is a simple syntax in D3 on how we associate node and data together.
+
+```
+d3.select(..).selectAll(..).data(..).enter()..
+```
+
+Let's consider an example
+
+```
+d3.select("body")   //Selecting First Body Tag in DOM
+  .selectAll("p")
+  .data([1,2,3,4,5,6,7,8,9,10]) //Array of data
+  .enter() //Every element in the array is bound to one node in our selection
+  .append("p") //Appending 1 Paragraph for every element of the Array
+      .text(function(d){
+            return d;
+      })
+```
+
 ### C) Handling DOM Events in D3
 
 We can use DOM Events in D3

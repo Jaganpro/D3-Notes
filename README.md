@@ -186,14 +186,35 @@ d3.csv("static/shots.csv", function(data){
       
       var shots = d3.select("svg")
                     .selectAll("g") //Here we are selecting all the Groups.
-                    .data(data)
+                    .data(data) //For Each data point (ie, rows in the excel sheet), loop
                     .enter()
                     .append("g") // One group per row in our Dataset
-                        .attr("class", "shot")  // Always use the CSS Classes. It is a best Practice
+                        .attr("class", "shot")  // Always use the CSS Classes. It is a best Practice in D3
                         .attr("transform", function(d){
                               return "translate(" + 10 * d.converted_y + "," + 10 * d.converted_x + ")";
                         })
-                    .on("mouseover", function(d){
+                        
+      shots.append("circle")
+           .attr("r", 5)
+
+}
+```
+
+"Converted_x" and "Converted_y" is used as the X and Y co-ordinates. Each and every data point is a Group or "g".
+We are using the translate function to map each and every data point. 
+
+"shots" variable represents all the "g" group datapoints and we are drawing a circle for each datapoint of radius 5px.
+
+
+![image](https://user-images.githubusercontent.com/2145211/47966326-28ec8f80-e01f-11e8-8b9f-417dd6d81601.png)
+
+And for this dataset, we are going to have a result as shown below:
+
+![image](https://user-images.githubusercontent.com/2145211/47966969-0742d680-e026-11e8-9f6c-bc51e43373e0.png)
+
+
+```
+.on("mouseover", function(d){
                         d3.select(this).raise()
                           .append("text")
                           .attr("class", "playername")
@@ -202,10 +223,7 @@ d3.csv("static/shots.csv", function(data){
                     .on("mouseout", function(d){
                         d3.selectAll("text.playername").remove();
                     })
-
-}
 ```
-
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

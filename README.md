@@ -138,6 +138,41 @@ OUTPUT:
 SVG follows the same DOM tree.
 So, we would be able to interact with SVG, the same way we are able to interact with HTML.
 
+Additional Examples using SVG
+
+Let's say if we want to draw a line, then we can use the (X1,Y1) and (X2,Y2) Coordinates
+
+```
+var line = svg.append("line")
+              .attr("x1", 100)
+              .attr("y1", 50)
+              .attr("x2", 500)
+              .attr("y2", 50)
+              .attr("stroke", "red")
+              .attr("stroke-width", 5)
+              
+```
+For Rectangle, we have to provide X and Y Co-ordinates, Height and Width.
+
+```
+var Rect = svg.append("rect")
+              .attr("x", 100)
+              .attr("y", 100)
+              .attr("width", 200)
+              .attr("height", 100)
+              .attr("fill", "#9B95FF");
+```
+For Circle, we need to provide the co-ordinates of the center of the circle and its radius
+  
+```
+var circle = svg.append("circle")
+                .attr("cx", 200)
+                .attr("cy", 300)
+                .attr("r", 80)
+                .attr("fill", "#7CE8D5");
+
+```
+
 NOTE:
 If we want to use more complex operations, then we are going to deal with "Relative Position" and "Absolute Position".
 So, lets say for example, when we want to move multiple SVG elements, it would be really tedious and difficult to move every single element individually.
@@ -368,41 +403,95 @@ NOTE: This turns into a Key, Value Pair.
 Key --> Being the Key element (Ie, Player)
 Value --> All other columns related to that Player.
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Now, we have the object above where the shots are grouped by players.
 
-### C) Handling DOM Events in D3
+> .rollup(function(a){...})
 
-We can use DOM Events in D3
+Once we have done our grouping, we can do some aggregation on top of the object.
+Here this function acts on the whole array of rows, rather than acting on the rows individually.
 
-```
-d3.selectAll('.hover-me')
-  .on('mouseover', function(){
-      this.style.backgroundColor = 'Red'
-  })
-  .on('mouseleave', function(){
-      this.style.backgroundColor = '';
-  })
-```
-
-### D) Data Loading and Binding of Data in D3
-
-In D3 we can display our DOM Elements using our Dataset. We can map Data into our DOM Elements.
-
-In this example, we are using the dataset to loop through each datapoint and create a DOM element.
-
+So, to illustrate the rollup functionality, lets get the length of the array.
 
 ```
-var dataset = [1, 2, 3, 4, 5];
-
-d3.select('#D3OrgChartDiv') //Here we are selecting the Body of the DOM element
-          .selectAll('p') // ??? This is needed, otherwise, it skips the first datapoint from the dataset. Don't know why.
-          .data(dataset) //Choosing the dataset to loop though . This will put the dataset in waiting state for further processing
-          .enter() //Process one data item at a time.
-          .append('p') //Appends a Paragraph for each data item
-          .text(function(d){ return d;});
+var players = d3.nest()
+                .key(functions(d) { return d.player; })
+                .rollup(function(v) { return v.length; })
+                .entries(data);
+                
+console.log(players);
 ```
- 
-### E) Creating a Simple Bar Chart using D3.JS
+
+Now, if we run this again, we get the following:
+
+![image](https://user-images.githubusercontent.com/2145211/47976331-e909c480-e07f-11e8-848b-c32934493544.png)
+
+We can see that the values are aggregated. Here the rollup represents total # of shots taken by players.
+
+Now that we have done some computation, lets add it to our visualization:
+
+```
+var selector = d3.select("#selector");
+
+selector.selectAll("option")
+        .data(players)
+        .enter()
+        .append("option")
+        .text(function(d){ return d.key + ":" + d.value; })
+        .attr("value", function(d) { return d.key(); })
+```
+
+The output is shown below. Now we have a dropdown of Players and shots taken as a dropdown values.
+
+![image](https://user-images.githubusercontent.com/2145211/47976501-b44a3d00-e080-11e8-8ae0-763a19dfb24a.png)
+
+
+Now, lets assume that we want to filter data by player selection from dropdown.
+We use filter() function to accomplish this
+
+```
+var selector = d3.select("#selector");
+
+selector.selectAll("option")
+        .data(players)
+        .enter()
+        .append("option")
+        .text(function(d){ return d.key + ":" + d.value; })
+        .attr("value", function(d) { return d.key(); })
+
+selector.on("change", function(){
+        d3.selectAll(".shot") 
+          .attr("opacity", 1.0); //Reset Opacity
+        var value = selector.property("value");
+        if(value != "ALL"){
+            d3.selectAll(".shot")
+              .filter(function(d){ return d.player != value; })
+              .attr("opacity", 0.1);
+         }
+      })
+
+```
+
+![image](https://user-images.githubusercontent.com/2145211/47977394-c5e21380-e085-11e8-9958-5b928132e540.png)
+
+We are also making sure that we add "ALL" value to the Dropdown value
+
+```
+      players.unshift({ "key" : ALL,
+                        "value" : d3.sum(players, function(d) {return d.value;}) })
+```
+![image](https://user-images.githubusercontent.com/2145211/47977495-515ba480-e086-11e8-92cc-f57046799e07.png)
+
+
+### 7) Additional Resources:
+
+https://d3js.org
+
+http://bl.ocks.org/mbostock
+
+https://github.com/fivethirtyeight/d3-pre
+
+
+### 8) Example: Creating a Simple Bar Chart using D3.JS
 
 We have variables which defines the height and width of the container
 
@@ -441,7 +530,7 @@ var barChart = svg.selectAll("rect")
 
 ```
 
-### F) Creating Labels
+### 9) Creating Labels in D3
 
 Here we are trying to add Labels to each of the Bar Chart
 
@@ -462,7 +551,7 @@ var text = svg.selectAll("text")
               .attr("fill", "#A64C38");
 ```
 
-### G) Scales in D3
+### 10) Scales in D3
 
 Scales are functions which will transform our data, either by increasing or decreasing value for better visualizations.
 
@@ -477,7 +566,7 @@ var yScale = d3.scaleLinear()
                .range([0, svgHeight]);
 
 ```
-### H) Axes in D3
+### 11) Axes in D3
 Axes are made of Lines, Text and hence they are very complex.
 Thankfully D3 provides us with various functions to create these
 
@@ -487,49 +576,3 @@ Thankfully D3 provides us with various functions to create these
 3. d3.axisBottom()
 4. d3.axisLeft()
 ```
-
-
-### I) Creating SVG Elements in D3
-
-SVG - Scalable Vector Graphics
-
-Let's say if we want to draw a line, then we can use the (X1,Y1) and (X2,Y2) Coordinates
-
-```
-var line = svg.append("line")
-              .attr("x1", 100)
-              .attr("y1", 50)
-              .attr("x2", 500)
-              .attr("y2", 50)
-              .attr("stroke", "red")
-              .attr("stroke-width", 5)
-              
-```
-For Rectangle, we have to provide X and Y Co-ordinates, Height and Width.
-
-```
-var Rect = svg.append("rect")
-              .attr("x", 100)
-              .attr("y", 100)
-              .attr("width", 200)
-              .attr("height", 100)
-              .attr("fill", "#9B95FF");
-```
-For Circle, we need to provide the co-ordinates of the center of the circle and its radius
-  
-```
-var circle = svg.append("circle")
-                .attr("cx", 200)
-                .attr("cy", 300)
-                .attr("r", 80)
-                .attr("fill", "#7CE8D5");
-
-```
-
-
-
-
-
-
-
-               

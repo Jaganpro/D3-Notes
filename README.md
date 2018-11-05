@@ -308,7 +308,65 @@ The canonical example for hierarchical data is a family tree.
 
 ![image](https://user-images.githubusercontent.com/2145211/47967674-fa29e580-e02d-11e8-8b04-d1798da663ae.png)
 
+It is represented as table in CSV. 
+A tree structure in D3 is popular. Now, we can use "stratify()" function to convert the tree structure into a JSON structure.
 
+```
+      var strat = d3.stratify()   //Here we are creating some stratifier
+                    .id(function(d){  //Here the Id is going to be the name of the person
+                        return d.name
+                    })
+                    .parentId(function(d){ //The parent Id is going to be the parent
+                        return d.parent;
+                    })
+      strat(data);  //Now when we pass in the data to strat() function, then we would end up with the Javascript Object.            
+```
+
+We would end up with a Javascript Object with 3 keys
+1. id
+2. parentId
+3. children
+
+> d3.nest()
+
+This is used to group together data.
+In our case, we are going to group together data by Player. (Ie, all the shots taken by certain Players)
+
+"d3.nest()" has 3 methods which we are going to use:
+
+```
+      .entries(data)
+      .key(function(d) {...})
+      .rollup(function(a) {...})
+```
+
+*.entries(data)*  Here we are going to specify the data we are going to nest.
+*.entries(function(d){...})*  Key is used to specify what we want to group on.
+*.rollup(function(d){...})* 
+
+
+Lets take a look at an example
+
+```
+var players = d3.nest()
+                .key(function(d){ return d.player; })
+                .entries(data);
+                
+console.log(players);
+```
+
+When we run this code, we can see that the data is grouped by Players
+
+![image](https://user-images.githubusercontent.com/2145211/47975862-c24a8e80-e07d-11e8-844f-4658d9831443.png)
+
+The data is grouped by the Players and the values are the shots taken by the Players
+
+![image](https://user-images.githubusercontent.com/2145211/47975893-e60dd480-e07d-11e8-8f79-d533b90f2c1e.png)
+
+
+NOTE: This turns into a Key, Value Pair. 
+Key --> Being the Key element (Ie, Player)
+Value --> All other columns related to that Player.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
